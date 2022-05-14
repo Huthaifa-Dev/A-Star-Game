@@ -1,4 +1,9 @@
 import 'phaser';
+// import { PythonShell } from 'python-shell';
+import object from './data.json';
+// import { PythonShell } from 'python-shell';
+// let { PythonShell } = require('python-shell')
+// PythonShell
 
 var config = {
     type: Phaser.AUTO,
@@ -20,34 +25,6 @@ function preload() {
     this.load.image('car', '../assets/car90.png');
     this.load.tilemapCSV('map', '../assets/grid.csv');
 
-    const grid = [
-        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 0, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 0, 0, 2],
-        [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 2, 2],
-        [2, 0, 2, 0, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 0, 0, 2],
-        [2, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 2],
-        [2, 0, 2, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 2, 0, 2, 0, 2, 0, 0, 2],
-        [2, 0, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 2, 2],
-        [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 0, 2, 2, 0, 2, 0, 2, 2, 2, 0, 2, 2],
-        [2, 0, 0, 0, 0, 2, 0, 2, 1, 1, 2, 0, 2, 0, 0, 0, 0, 2, 0, 2, 1, 2, 0, 0, 2],
-        [2, 0, 2, 2, 0, 2, 0, 2, 1, 1, 2, 0, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2],
-        [2, 0, 2, 2, 0, 2, 0, 2, 1, 1, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 0, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 0, 2, 0, 2, 0, 2, 1, 2, 0, 2],
-        [2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 2, 2, 0, 2],
-        [2, 0, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
-    ]
-
-    var start = grid[1][1];
-
-
-    // var graph = new Graph();
-    // var start = graph.grid[0][0];
-    // var end = graph.grid[1][2];
-    // var result = astar.search(graph, start, end);
 }
 
 function create() {
@@ -56,12 +33,21 @@ function create() {
     var layer = map.createLayer(0, tileset, 0, 0);
 
     var player = this.add.image(32 + 16, 32 + 16, 'car');
+    var solution = object.solution;
+
+    for (let square in solution) {
+        let index = square[0] * 25 + square[1];
+        setTimeout(() => {
+            console.log(index)
+        }, 1000)
+    }
+
 
     //  Left
-    this.input.keyboard.on('keydown-A', function (event) {
+    this.input.keyboard.on('keydown-Space', function (event) {
 
         var tile = layer.getTileAtWorldXY(player.x - 32, player.y, true);
-
+        console.log('space clicked')
         if (tile.index === 2) {
             //  Blocked, we can't move
         }
